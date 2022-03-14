@@ -244,10 +244,10 @@ def vpg(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(),  seed=0,
 
         # Train policy with a single step of gradient descent
         pi_optimizer.zero_grad()
-        loss_pi, pi_info = compute_loss_pi(data)
         loss_pi.backward()
         mpi_avg_grads(ac.pi)    # average grads across MPI processes
         pi_optimizer.step()
+        loss_pi, pi_info = compute_loss_pi(data)
 
         # Value function learning
         for i in range(train_v_iters):
